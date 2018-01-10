@@ -1,4 +1,4 @@
-package com.codeages.framework.web;
+package com.codeages.framework.session;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;

@@ -1,4 +1,4 @@
-package com.codeages.framework.web;
+package com.codeages.framework.handler;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -12,27 +12,25 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
-import org.springframework.security.web.authentication.logout.LogoutSuccessHandler;
-import org.springframework.stereotype.Component;
 
+import com.codeages.framework.response.ResponseWrapper;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-@Component
-public class AuthenticationHandler
-		implements AuthenticationSuccessHandler, AuthenticationFailureHandler, LogoutSuccessHandler {
-//
-//	@Autowired
-//	private UserService userService;
+public class AuthenticationHandler implements AuthenticationSuccessHandler, AuthenticationFailureHandler {
+	//
+	// @Autowired
+	// private UserService userService;
 
 	@Override
 	public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
 			Authentication authentication) throws IOException, ServletException {
-//		User currenUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-//		User user = userService.getUserById(currenUser.getId());
-//		user.setLastLoginTime(new Date());
-//		user.setLastLoginIp(getIpAddr(request));
-//		userService.updateUser(user);
-		
+		// User currenUser = (User)
+		// SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		// User user = userService.getUserById(currenUser.getId());
+		// user.setLastLoginTime(new Date());
+		// user.setLastLoginIp(getIpAddr(request));
+		// userService.updateUser(user);
+
 		ObjectMapper mapper = new ObjectMapper();
 		Map<String, String> map = new HashMap<String, String>();
 		map.put("token", request.getSession().getId());
@@ -47,7 +45,7 @@ public class AuthenticationHandler
 		response.setCharacterEncoding("UTF-8");
 		Map<String, String> map = new HashMap<String, String>();
 		ResponseWrapper responseWrapper = new ResponseWrapper(map);
-		responseWrapper.setStatus(String.valueOf(HttpServletResponse.SC_UNAUTHORIZED)+".1");
+		responseWrapper.setStatus(String.valueOf(HttpServletResponse.SC_UNAUTHORIZED) + ".1");
 		responseWrapper.setMessage("用户名或密码错误");
 
 		ObjectMapper mapper = new ObjectMapper();
@@ -72,17 +70,6 @@ public class AuthenticationHandler
 			return request.getRemoteAddr();
 		}
 		return ip;
-	}
-
-	@Override
-	public void onLogoutSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication)
-			throws IOException, ServletException {
-		ObjectMapper mapper = new ObjectMapper();
-		Map<String, String> map = new HashMap<String, String>();
-		response.getWriter().append(mapper.writeValueAsString(new ResponseWrapper(map)));
-		response.setContentType("application/json");
-		response.setStatus(200);
-
 	}
 
 }

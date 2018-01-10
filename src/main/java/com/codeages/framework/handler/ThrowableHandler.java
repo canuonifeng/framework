@@ -1,4 +1,4 @@
-package com.codeages.framework.web;
+package com.codeages.framework.handler;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.codeages.framework.exception.ServiceException;
+import com.codeages.framework.response.ResponseWrapper;
 
 @ControllerAdvice
 public class ThrowableHandler{

@@ -1,4 +1,4 @@
-package com.codeages.framework.web;
+package com.codeages.framework.authentication;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedReader;
@@ -6,7 +6,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -21,15 +20,14 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
-	
+
 	@Override
 	public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response)
 			throws AuthenticationException {
-		List a;
 		if (!"POST".equals(request.getMethod())) {
 			throw new AuthenticationServiceException("Authentication method not supported: " + request.getMethod());
 		}
-		
+
 		String username = "", password = "";
 
 		if (null != this.obtainUsername(request) && null != this.obtainPassword(request)) {

@@ -1,4 +1,4 @@
-package com.codeages.framework.web;
+package com.codeages.framework.response;
 
 import org.springframework.core.MethodParameter;
 import org.springframework.http.MediaType;

@@ -1,4 +1,4 @@
-package com.codeages.framework.web;
+package com.codeages.framework.response;
 
 import java.io.Serializable;
 
