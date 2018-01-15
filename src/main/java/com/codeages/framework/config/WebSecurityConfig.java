@@ -2,15 +2,12 @@ package com.codeages.framework.config;
 
 import javax.servlet.Filter;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.web.access.AccessDeniedHandler;
 import org.springframework.security.web.authentication.RememberMeServices;
@@ -20,23 +17,19 @@ import org.springframework.security.web.csrf.HttpSessionCsrfTokenRepository;
 import org.springframework.session.security.web.authentication.SpringSessionRememberMeServices;
 
 import com.codeages.framework.authentication.AuthenticationFilter;
-import com.codeages.framework.authentication.AuthenticationProvider;
 import com.codeages.framework.handler.AuthenticationHandler;
 
 @Configuration
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
-	@Autowired
-	private UserDetailsService userDetailsService;
-	
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		http.csrf().disable();
 		http.rememberMe().rememberMeServices(rememberMeServices());
 		http.addFilterAt(getAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
 		http.logout().logoutSuccessHandler(getLogoutSuccessHandler());
-		http.authorizeRequests().antMatchers("/csrf-token").permitAll().anyRequest().authenticated();
+		http.authorizeRequests().anyRequest().authenticated();
 		http.exceptionHandling().authenticationEntryPoint(authenticationEntryPoint())
 				.accessDeniedHandler(getAccessDeniedHandler());
 	}
@@ -44,19 +37,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	@Override
 	public void configure(WebSecurity web) throws Exception {
 		web.ignoring().antMatchers("/v2/api-docs", "/configuration/ui", "/swagger-resources", "/configuration/security",
-				"/swagger-ui.html", "/webjars/**");
+				"/swagger-ui.html", "/webjars/**", "/", "/login", "/logout", "/csrf-token");
 	}
 
-	@Override
-	public void configure(AuthenticationManagerBuilder auth) throws Exception {
-		auth.authenticationProvider(getAuthenticationProvider());
-	}
-	
-	@Bean
-	public AuthenticationProvider getAuthenticationProvider() {
-		return new AuthenticationProvider(userDetailsService);
-	}
-	
 	@Bean
 	public Filter getAuthenticationFilter() throws Exception {
 		AuthenticationFilter authFilter = new AuthenticationFilter();
@@ -65,12 +48,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		authFilter.setAuthenticationSuccessHandler(getAuthenticationHandler());
 		return authFilter;
 	}
-	
+
 	@Bean
 	public AuthenticationHandler getAuthenticationHandler() {
 		return new AuthenticationHandler();
 	}
-	
+
 	@Bean
 	public LogoutSuccessHandler getLogoutSuccessHandler() {
 		return new com.codeages.framework.handler.LogoutSuccessHandler();
