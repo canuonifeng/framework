@@ -12,7 +12,7 @@ import com.codeages.framework.web.TimeCostInterceptor;
 
 @Configuration
 @EnableWebMvc
-public class WebMvcConfig extends WebMvcConfigurerAdapter {
+public class FrameworkMvcConfig extends WebMvcConfigurerAdapter {
 	
 	@Override
 	public void addInterceptors(InterceptorRegistry registry) {

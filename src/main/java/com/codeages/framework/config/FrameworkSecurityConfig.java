@@ -3,7 +3,6 @@ package com.codeages.framework.config;
 import javax.servlet.Filter;
 
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -19,9 +18,8 @@ import org.springframework.session.security.web.authentication.SpringSessionReme
 import com.codeages.framework.authentication.AuthenticationFilter;
 import com.codeages.framework.handler.AuthenticationHandler;
 
-@Configuration
 @EnableWebSecurity
-public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
+public class FrameworkSecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
@@ -29,7 +27,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		http.rememberMe().rememberMeServices(rememberMeServices());
 		http.addFilterAt(getAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
 		http.logout().logoutSuccessHandler(getLogoutSuccessHandler());
-		http.authorizeRequests().anyRequest().authenticated();
+		http.antMatcher("/**").authorizeRequests().anyRequest().authenticated();
 		http.exceptionHandling().authenticationEntryPoint(authenticationEntryPoint())
 				.accessDeniedHandler(getAccessDeniedHandler());
 	}
@@ -37,7 +35,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	@Override
 	public void configure(WebSecurity web) throws Exception {
 		web.ignoring().antMatchers("/v2/api-docs", "/configuration/ui", "/swagger-resources", "/configuration/security",
-				"/swagger-ui.html", "/webjars/**", "/", "/login", "/logout", "/csrf-token");
+				"/swagger-ui.html", "/webjars/**", "/", "/login**", "/logout", "/csrf-token","/index.html");
 	}
 
 	@Bean
