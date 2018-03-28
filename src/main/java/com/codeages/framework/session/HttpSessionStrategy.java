@@ -29,7 +29,6 @@ public class HttpSessionStrategy implements MultiHttpSessionStrategy {
 	public void onNewSession(Session session, HttpServletRequest request, HttpServletResponse response) {
 		headerHttpSessionStrategy.onNewSession(session, request, response);
 		cookieHttpSessionStrategy.onNewSession(session, request, response);
-
 	}
 
 	@Override

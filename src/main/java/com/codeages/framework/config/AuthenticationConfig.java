@@ -5,7 +5,6 @@ import javax.servlet.Filter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
-import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.web.access.AccessDeniedHandler;
@@ -18,8 +17,7 @@ import org.springframework.session.security.web.authentication.SpringSessionReme
 import com.codeages.framework.authentication.AuthenticationFilter;
 import com.codeages.framework.handler.AuthenticationHandler;
 
-@EnableWebSecurity
-public class FrameworkSecurityConfig extends WebSecurityConfigurerAdapter {
+public class AuthenticationConfig extends WebSecurityConfigurerAdapter {
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
