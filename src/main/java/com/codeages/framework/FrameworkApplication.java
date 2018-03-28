@@ -8,5 +8,5 @@ import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 @EnableJpaAuditing
 @ComponentScan(basePackages = { "com.codeages" })
 public class FrameworkApplication {
-	
+
 }
