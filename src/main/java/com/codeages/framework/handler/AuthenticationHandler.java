@@ -34,7 +34,7 @@ public class AuthenticationHandler implements AuthenticationSuccessHandler, Auth
 		ObjectMapper mapper = new ObjectMapper();
 		Map<String, String> map = new HashMap<String, String>();
 		map.put("token", request.getSession().getId());
-		response.getWriter().append(mapper.writeValueAsString(new ResponseWrapper(map)));
+		response.getWriter().append(mapper.writeValueAsString(new ResponseWrapper<Map<String,String>>(map)));
 		response.setContentType("application/json");
 		response.setStatus(200);
 	}
@@ -44,7 +44,7 @@ public class AuthenticationHandler implements AuthenticationSuccessHandler, Auth
 			AuthenticationException exception) throws IOException, ServletException {
 		response.setCharacterEncoding("UTF-8");
 		Map<String, String> map = new HashMap<String, String>();
-		ResponseWrapper responseWrapper = new ResponseWrapper(map);
+		ResponseWrapper responseWrapper = new ResponseWrapper<Map<String,String>>(map);
 		responseWrapper.setStatus(String.valueOf(HttpServletResponse.SC_UNAUTHORIZED) + ".1");
 		responseWrapper.setMessage("用户名或密码错误");
 

@@ -15,7 +15,7 @@ public class AccessDeniedHandler implements org.springframework.security.web.acc
 	@Override
 	public void handle(HttpServletRequest request, HttpServletResponse response,
 			AccessDeniedException accessDeniedException) throws IOException, ServletException {
-		ResponseWrapper err = new ResponseWrapper(accessDeniedException.getMessage());
+		ResponseWrapper<String> err = new ResponseWrapper<String>(accessDeniedException.getMessage());
 		err.setMessage(accessDeniedException.getMessage());
 		err.setStatus(String.valueOf(HttpServletResponse.SC_FORBIDDEN));
 

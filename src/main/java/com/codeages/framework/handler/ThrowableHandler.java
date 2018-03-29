@@ -1,5 +1,7 @@
 package com.codeages.framework.handler;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -19,7 +21,7 @@ public class ThrowableHandler{
 	@ResponseBody
 	public ResponseWrapper jsonErrorHandler(HttpServletRequest req, MethodArgumentNotValidException e)
 			throws Exception {
-		ResponseWrapper err = new ResponseWrapper(e.getBindingResult().getAllErrors());
+		ResponseWrapper err = new ResponseWrapper<List>(e.getBindingResult().getAllErrors());
 		err.setMessage("数据校验失败！");
 		err.setStatus(String.valueOf(HttpServletResponse.SC_NOT_ACCEPTABLE));
 		return err;
@@ -28,7 +30,7 @@ public class ThrowableHandler{
 	@ExceptionHandler(value = ServiceException.class)
 	@ResponseBody
 	public ResponseWrapper jsonErrorHandler(HttpServletRequest req, ServiceException e) {
-		ResponseWrapper err = new ResponseWrapper(e.getMessage());
+		ResponseWrapper err = new ResponseWrapper<String>(e.getMessage());
 		err.setMessage(e.getMessage());
 		err.setStatus(e.getCode());
 		return err;
@@ -37,7 +39,7 @@ public class ThrowableHandler{
 	@ExceptionHandler(value = AccessDeniedException.class)
 	@ResponseBody
 	public ResponseWrapper accessDeniedExceptionHandler(HttpServletRequest req, AccessDeniedException e){
-		ResponseWrapper err = new ResponseWrapper(e.getMessage());
+		ResponseWrapper err = new ResponseWrapper<String>(e.getMessage());
 		err.setMessage("不允许访问");
 		err.setStatus(String.valueOf(HttpServletResponse.SC_FORBIDDEN));
 		return err;
@@ -47,7 +49,7 @@ public class ThrowableHandler{
 	@ResponseBody
 	public ResponseWrapper throwableHandler(HttpServletRequest req, Throwable e) throws Exception {
 		e.printStackTrace();
-		ResponseWrapper err = new ResponseWrapper(e.getMessage());
+		ResponseWrapper err = new ResponseWrapper<String>(e.getMessage());
 		err.setMessage("服务器异常");
 		err.setStatus(String.valueOf(HttpServletResponse.SC_INTERNAL_SERVER_ERROR));
 		return err;

@@ -20,7 +20,7 @@ public class LogoutSuccessHandler
 			throws IOException, ServletException {
 		ObjectMapper mapper = new ObjectMapper();
 		Map<String, String> map = new HashMap<String, String>();
-		response.getWriter().append(mapper.writeValueAsString(new ResponseWrapper(map)));
+		response.getWriter().append(mapper.writeValueAsString(new ResponseWrapper<Map<String,String>>(map)));
 		response.setContentType("application/json");
 		response.setStatus(200);
 
