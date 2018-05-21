@@ -11,7 +11,6 @@ import org.springframework.security.web.access.AccessDeniedHandler;
 import org.springframework.security.web.authentication.RememberMeServices;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.authentication.logout.LogoutSuccessHandler;
-import org.springframework.security.web.csrf.HttpSessionCsrfTokenRepository;
 import org.springframework.session.security.web.authentication.SpringSessionRememberMeServices;
 
 import com.codeages.framework.authentication.AuthenticationFilter;
@@ -26,6 +25,7 @@ public class AuthenticationConfig extends WebSecurityConfigurerAdapter {
 		http.addFilterAt(getAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
 		http.logout().logoutSuccessHandler(getLogoutSuccessHandler());
 		http.antMatcher("/**").authorizeRequests().anyRequest().authenticated();
+		http.formLogin().successHandler(getAuthenticationHandler()).failureHandler(getAuthenticationHandler());
 		http.exceptionHandling().authenticationEntryPoint(authenticationEntryPoint())
 				.accessDeniedHandler(getAccessDeniedHandler());
 	}
@@ -33,7 +33,7 @@ public class AuthenticationConfig extends WebSecurityConfigurerAdapter {
 	@Override
 	public void configure(WebSecurity web) throws Exception {
 		web.ignoring().antMatchers("/v2/api-docs", "/configuration/ui", "/swagger-resources", "/configuration/security",
-				"/swagger-ui.html", "/webjars/**", "/", "/login**", "/logout", "/csrf-token","/index.html");
+				"/swagger-ui.html", "/webjars/**", "/", "/login**", "/logout", "/csrf-token", "/index.html");
 	}
 
 	@Bean
@@ -63,11 +63,6 @@ public class AuthenticationConfig extends WebSecurityConfigurerAdapter {
 	}
 
 	@Bean
-	public HttpSessionCsrfTokenRepository getCsrfTokenRepository() {
-		return new HttpSessionCsrfTokenRepository();
-	}
-
-	@Bean
 	public AccessDeniedHandler getAccessDeniedHandler() {
 		return new com.codeages.framework.handler.AccessDeniedHandler();
 	}
@@ -76,5 +71,4 @@ public class AuthenticationConfig extends WebSecurityConfigurerAdapter {
 	public AuthenticationEntryPoint authenticationEntryPoint() {
 		return new com.codeages.framework.authentication.AuthenticationEntryPoint();
 	}
-
 }

@@ -13,6 +13,6 @@ public class AuthenticationProvider extends DaoAuthenticationProvider{
 		this.setPasswordEncoder(new Md5PasswordEncoder());
 		ReflectionSaltSource saltSource = new ReflectionSaltSource();
 		saltSource.setUserPropertyToUse("salt");
-		this.setSaltSource(saltSource);
+		this.setSaltSource(saltSource);		
 	}
 }

@@ -30,7 +30,7 @@ public class RateLimiterInterceptor extends HandlerInterceptorAdapter {
 		
 		for (Entry<String, Long> entry : paths.entrySet()) {
 			String key = entry.getKey();
-			if (path.indexOf(key) == 0) {
+			if (key != null && path != null && path.indexOf(key) == 0) {
 				if (!map.containsKey(key)) {
 					map.put(key, RateLimiter.create(entry.getValue()));
 				}

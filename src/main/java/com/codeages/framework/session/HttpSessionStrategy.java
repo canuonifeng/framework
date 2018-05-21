@@ -9,9 +9,11 @@ import org.springframework.session.jdbc.config.annotation.web.http.EnableJdbcHtt
 import org.springframework.session.web.http.CookieHttpSessionStrategy;
 import org.springframework.session.web.http.HeaderHttpSessionStrategy;
 import org.springframework.session.web.http.MultiHttpSessionStrategy;
+import org.springframework.stereotype.Component;
 
 @Configuration
-@EnableJdbcHttpSession()
+@EnableJdbcHttpSession
+@Component
 public class HttpSessionStrategy implements MultiHttpSessionStrategy {
 	CookieHttpSessionStrategy cookieHttpSessionStrategy = new CookieHttpSessionStrategy();
 	HeaderHttpSessionStrategy headerHttpSessionStrategy = new HeaderHttpSessionStrategy();
