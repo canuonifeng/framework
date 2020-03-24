@@ -3,17 +3,11 @@ package com.codeages.framework.session;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.springframework.context.annotation.Configuration;
 import org.springframework.session.Session;
-import org.springframework.session.jdbc.config.annotation.web.http.EnableJdbcHttpSession;
 import org.springframework.session.web.http.CookieHttpSessionStrategy;
 import org.springframework.session.web.http.HeaderHttpSessionStrategy;
 import org.springframework.session.web.http.MultiHttpSessionStrategy;
-import org.springframework.stereotype.Component;
 
-@Configuration
-@EnableJdbcHttpSession
-@Component
 public class HttpSessionStrategy implements MultiHttpSessionStrategy {
 	CookieHttpSessionStrategy cookieHttpSessionStrategy = new CookieHttpSessionStrategy();
 	HeaderHttpSessionStrategy headerHttpSessionStrategy = new HeaderHttpSessionStrategy();
