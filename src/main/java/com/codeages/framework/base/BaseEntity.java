@@ -17,11 +17,14 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonProperty.Access;
+import com.fasterxml.jackson.databind.PropertyNamingStrategy;
+import com.fasterxml.jackson.databind.annotation.JsonNaming;
 
 import io.swagger.annotations.ApiModelProperty;
 
 @MappedSuperclass
 @EntityListeners(AuditingEntityListener.class)
+@JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
 @JsonIgnoreProperties({ "hibernateLazyInitializer", "handler" })
 abstract public class BaseEntity implements Serializable {
 
