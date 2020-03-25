@@ -8,10 +8,8 @@ import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.web.access.AccessDeniedHandler;
-import org.springframework.security.web.authentication.RememberMeServices;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.authentication.logout.LogoutSuccessHandler;
-import org.springframework.session.security.web.authentication.SpringSessionRememberMeServices;
 
 import com.codeages.framework.authentication.AuthenticationFilter;
 import com.codeages.framework.handler.AuthenticationHandler;
@@ -21,7 +19,6 @@ public class AuthenticationConfig extends WebSecurityConfigurerAdapter {
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		http.csrf().disable();
-		http.rememberMe().rememberMeServices(rememberMeServices());
 		http.addFilterAt(getAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
 		http.logout().logoutSuccessHandler(getLogoutSuccessHandler());
 		http.antMatcher("/**").authorizeRequests().anyRequest().authenticated();
@@ -53,13 +50,6 @@ public class AuthenticationConfig extends WebSecurityConfigurerAdapter {
 	@Bean
 	public LogoutSuccessHandler getLogoutSuccessHandler() {
 		return new com.codeages.framework.handler.LogoutSuccessHandler();
-	}
-
-	@Bean
-	public RememberMeServices rememberMeServices() {
-		SpringSessionRememberMeServices rememberMeServices = new SpringSessionRememberMeServices();
-		rememberMeServices.setAlwaysRemember(true);
-		return rememberMeServices;
 	}
 
 	@Bean

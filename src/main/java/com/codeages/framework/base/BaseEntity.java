@@ -20,8 +20,6 @@ import com.fasterxml.jackson.annotation.JsonProperty.Access;
 import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
 
-import io.swagger.annotations.ApiModelProperty;
-
 @MappedSuperclass
 @EntityListeners(AuditingEntityListener.class)
 @JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
@@ -31,19 +29,16 @@ abstract public class BaseEntity implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Basic(optional = false)
-	@ApiModelProperty(value = "主键")
 	private Long id;
 
 	@CreatedDate
 	@JsonProperty(access = Access.READ_ONLY)
-	@ApiModelProperty(value = "创建时间", readOnly = true)
 	private Date createdTime;
 
 	@LastModifiedDate
 	@JsonProperty(access = Access.READ_ONLY)
-	@ApiModelProperty(value = "更新时间", readOnly = true)
 	private Date updatedTime;
 
 	public Long getId() {
